@@ -1,0 +1,25 @@
+mesos_cluster_name: "Cluster01"
+zookeeper_client_port: "2181"
+zookeeper_server_group: zookeeper_servers
+zookeeper_peers_nodes: "
+	{%- if zookeeper_peers is defined -%}
+	    {{ zookeeper_peers }}
+	{%- else -%}
+	    {%- set zookeeper_peers = [] -%}
+	    {%- for host in groups[zookeeper_server_group] -%}
+	      {%- if host not in zookeeper_peers -%}
+	        {%- set current_host = hostvars[host]['ansible_eth0']['ipv4']['address'] + ':' + zookeeper_client_port -%}
+	        {%- do zookeeper_peers.append(current_host) -%}
+	      {%- endif -%}
+	    {%- endfor -%}
+	    {{ zookeeper_peers|join(',') }}
+	{%- endif -%}
+"
+zookeeper_nodes_list: "
+        {%- if zookeeper_nodes is defined -%}
+            {{ zookeeper_nodes }}
+        {%- else -%}
+            {{ zookeeper_servers|join(',') }}
+        {%- endif -%}
+"
+

@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+    - name: set hostname to local ipv4 address
+      lineinfile:
+        dest: /etc/hosts
+        line: "{{ ansible_eth0.ipv4.address }} {{ ansible_hostname }}"
+
+- hosts: mesos_masters
+  roles:
+     - { role: docker }
+     - { role: zookeeper }
+     - { role: mesos, mesos_install_mode: "master", mesos_version: "latest" }
+     - { role: marathon }
+
+- hosts: mesos_slaves
+  roles:
+    - { role: docker }
+    - {role: mesos, mesos_install_mode: "slave", mesos_version: "latest" }

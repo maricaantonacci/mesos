@@ -1,0 +1,11 @@
+---
+# defaults file for marathon
+marathon_version: 'latest'
+#marathon_hostname: "{{ ansible_hostname }}"
+marathon_hostname: "{{ ansible_default_ipv4.address }}"
+marathon_framework_name: "marathon"
+marathon_port: '8080'
+marathon_server_zk_group: marathon_servers
+marathon_image: "indigodatacloud/marathon:{{ marathon_version }}"
+marathon_master_peers: "zk://{{ zookeeper_peers_nodes }}/mesos"
+marathon_zk_peers: "zk://{{ zookeeper_peers_nodes }}"
