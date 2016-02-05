@@ -11,3 +11,7 @@ ansible >= 2.0
 - zookepeer (`roles/zookeeper`): configure and start zookeeper container
 - mesos (`roles/mesos`): configure and start containers for mesos master (`when: mesos_install_mode=master`) and/or mesos slave (`when: mesos_install_mode=slave`) 
 - marathon (`roles/marathon`): configure and start container for marathon framework
+
+## Example playbook
+
+See `site.yml`
