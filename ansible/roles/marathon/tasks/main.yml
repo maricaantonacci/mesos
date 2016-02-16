@@ -12,3 +12,14 @@
       MARATHON_MASTER: "{{ marathon_master_peers }}"
       MARATHON_ZK: "{{ marathon_zk_peers }}/{{ marathon_framework_name }}" 
       MARATHON_FRAMEWORK_NAME: "{{ marathon_framework_name }}"
+  tags: marathon
+
+- name: register marathon service with curl check
+  consul:
+    service_name: marathon
+    service_port: 8080
+    script: "curl http://{{marathon_hostname}}:8080"
+    interval: 10s
+    tags: marathon
+
+- include: apps.yml

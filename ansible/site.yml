@@ -9,11 +9,24 @@
 - hosts: mesos_masters
   roles:
      - { role: docker }
+     - { role: consul, consul_mode: "server", consul_image: "progrium/consul" }
+     - { role: dnsmasq }
      - { role: zookeeper }
      - { role: mesos, mesos_install_mode: "master", mesos_version: "latest" }
      - { role: marathon }
+     - { role: chronos }
 
 - hosts: mesos_slaves
   roles:
     - { role: docker }
+    - { role: consul, consul_mode: "server", consul_image: "progrium/consul" }
+    - { role: dnsmasq }
     - {role: mesos, mesos_install_mode: "slave", mesos_version: "latest" }
+
+- hosts: load_balancers
+  roles:
+    - { role: docker }
+    - { role: consul, consul_mode: "server", consul_image: "progrium/consul" }
+    - { role: dnsmasq }
+    - { role: haproxy-consul }
+    - { role: keepalived, keepalived_virtual_ip: "172.30.6.144" }

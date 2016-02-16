@@ -1,4 +1,5 @@
 mesos_cluster_name: "Cluster01"
+docker_bridge_ip: "172.0.17.1"
 zookeeper_client_port: "2181"
 zookeeper_server_group: zookeeper_servers
 zookeeper_peers_nodes: "

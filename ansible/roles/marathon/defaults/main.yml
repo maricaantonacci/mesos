@@ -9,3 +9,5 @@ marathon_server_zk_group: marathon_servers
 marathon_image: "indigodatacloud/marathon:{{ marathon_version }}"
 marathon_master_peers: "zk://{{ zookeeper_peers_nodes }}/mesos"
 marathon_zk_peers: "zk://{{ zookeeper_peers_nodes }}"
+marathon_consul_version: 'latest'
+marathon_consul_image: "ciscocloud/marathon-consul:{{marathon_consul_version}}"

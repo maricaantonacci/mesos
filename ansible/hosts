@@ -9,9 +9,21 @@ mesos_masters
 [zookeeper_servers:children]
 mesos_masters
 
+[chronos_servers:children]
+mesos_masters
+
+[consul_servers:children]
+mesos_masters
+
 [mesos_slaves]
 172.30.6.140
 172.30.6.141
+
+[consul_servers:children]
+mesos_slaves
+
+[load_balancers]
 172.30.6.142
+172.30.6.143
 
 

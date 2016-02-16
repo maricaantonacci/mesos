@@ -5,6 +5,8 @@ mesos_cluster_name: "Cluster01"
 mesos_ip: "{{ ansible_default_ipv4.address }}"
 mesos_hostname: "{{ ansible_default_ipv4.address }}"
 
+mesos_version: 'latest'
+
 # Defaults file for mesos-salve
 mesos_slave_port: 5051
 mesos_containerizers: "docker,mesos"

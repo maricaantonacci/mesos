@@ -11,3 +11,10 @@
     restart_policy: always
   tags:
     - zookeeper
+
+- name: register zookeeper service 
+  consul:
+    service_name: zookeeper
+    service_port: 2181
+    tags: zookeeper
+

@@ -1,0 +1,7 @@
+---
+load_balancers_group: "load_balancers"
+keepalived_role: "{% if ansible_default_ipv4.address == hostvars[groups[load_balancers_group][0]]['ansible_eth0']['ipv4']['address'] %}master{% else %}slave{% endif %}"
+keepalived_version: 'latest'
+keepalived_image: "indigodatacloud/keepalived:{{keepalived_version}}"
+keepalived_priority: "{%- if keepalived_role == 'master' -%}150{%- else -%}100{%- endif -%}"
+

@@ -12,7 +12,6 @@
     restart_policy: always
     volumes:
     - "/sys/fs/cgroup:/sys/fs/cgroup"
-    - "/usr/bin/docker:/usr/bin/docker:ro"
     - "/var/run/docker.sock:/var/run/docker.sock"
     net: "host"
     env:

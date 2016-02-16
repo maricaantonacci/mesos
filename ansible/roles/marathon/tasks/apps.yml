@@ -1,0 +1,22 @@
+- name: create marathon conf dir
+  file: path="/etc/marathon" state=directory
+
+- name: create json files for "{{item}}"
+  template:
+    src: '{{ item }}.json.j2'
+    dest: /etc/marathon/{{ item }}.json
+  with_items:
+    - mesos-consul
+    - marathon-consul
+  tags:
+    - marathon
+
+- name: start app
+  run_once: true
+  command: 'curl -X PUT -d@/etc/marathon/{{ item }}.json -H "Content-Type: application/json" http://marathon.service.consul:8080/v2/apps/{{ item }}'
+  changed_when: false
+  with_items:
+    - mesos-consul
+    - marathon-consul
+  tags:
+    - marathon
