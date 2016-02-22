@@ -2,9 +2,10 @@ mesos_cluster_name: "Cluster01"
 docker_bridge_ip: "172.0.17.1"
 zookeeper_client_port: "2181"
 zookeeper_server_group: zookeeper_servers
+
 zookeeper_peers_nodes: "
 	{%- if zookeeper_peers is defined -%}
-	    {{ zookeeper_peers }}
+            {% for host in zookeeper_peers %}{{host}}:{{zookeeper_client_port}}{% if not loop.last %},{% endif %}{% endfor %}
 	{%- else -%}
 	    {%- set zookeeper_peers = [] -%}
 	    {%- for host in groups[zookeeper_server_group] -%}
@@ -16,11 +17,11 @@ zookeeper_peers_nodes: "
 	    {{ zookeeper_peers|join(',') }}
 	{%- endif -%}
 "
-zookeeper_nodes_list: "
-        {%- if zookeeper_nodes is defined -%}
-            {{ zookeeper_nodes }}
-        {%- else -%}
-            {{ zookeeper_servers|join(',') }}
-        {%- endif -%}
-"
+#zookeeper_nodes_list: "
+#        {%- if zookeeper_nodes is defined -%}
+#            {{ zookeeper_nodes }}
+#        {%- else -%}
+#            {{ zookeeper_servers|join(',') }}
+#        {%- endif -%}
+#"
 
