@@ -1,3 +1,5 @@
+- wait_for: port=8080 host=marathon.service.consul delay=6 timeout=60 
+
 - name: start mesos-consul app
   run_once: true
   uri:
