@@ -29,8 +29,10 @@ marathon_image: "indigodatacloud/marathon:{{ marathon_version }}"
 marathon_master_peers: "zk://{{ zookeeper_peers_nodes }}/mesos"
 marathon_zk_peers: "zk://{{ zookeeper_peers_nodes }}"
 
+# Note: marathon-consul checks the certificate CN against the host marathon.service.consul
 openssl_self_signed:
- - { name : "{{ ansible_default_ipv4.address }}" }
+# - { name : "{{ ansible_default_ipv4.address }}" }
+ - { name : "marathon.service.consul" }
 generate_random_pass: "true"
 marathon_key_password: "password"
 marathon_pkcs_password: "password"
