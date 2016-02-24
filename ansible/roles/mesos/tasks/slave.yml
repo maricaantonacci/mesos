@@ -1,6 +1,16 @@
 ---
 # Tasks for Slave nodes
 
+- name: Ensure local certs directory exists
+  file: state=directory path=/usr/local/share/ca-certificates
+
+- name: Install rootCA certificate
+  copy: src=rootCA.crt dest=/usr/local/share/ca-certificates/rootCA.crt
+
+- name: Update cert index
+  shell: /usr/sbin/update-ca-certificates
+
+
 - name: run mesos-slave container
   when: mesos_install_mode == "slave"
   docker:
