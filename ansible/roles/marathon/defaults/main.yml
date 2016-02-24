@@ -18,7 +18,7 @@ marathon_key_password: "password"
 marathon_pkcs_password: "password"
 marathon_jks_password: "password"
 marathon_username: "admin"
-marathon_passw: "secr3t"
+marathon_password: "secr3t"
 marathon_https_port: '8443'
 marathon_keystore_path: '/etc/marathon/ssl_keystore.jks'
 
@@ -35,7 +35,7 @@ marathon_consul_image: "ciscocloud/marathon-consul:{{marathon_consul_version}}"
 
 marathon_consul_app_json: '{
   "id": "marathon-consul",
-  "args": ["--registry=http://consul.service.consul:8500 --marathon-protocol=https --marathon-username={{marathon_username}} --marathon-password={{marathon_passw}} --marathon-location=marathon.service.consul:{{marathon_https_port}}"],
+  "args": ["--registry=http://consul.service.consul:8500 --marathon-protocol=https --marathon-username={{marathon_username}} --marathon-password={{marathon_password}} --marathon-location=marathon.service.consul:{{marathon_https_port}}"],
   "container": {
     "type": "DOCKER",
     "docker": {

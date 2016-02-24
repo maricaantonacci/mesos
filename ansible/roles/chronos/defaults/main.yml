@@ -7,7 +7,7 @@ chronos_key_password: "password"
 chronos_pkcs_password: "password"
 chronos_jks_password: "password"
 chronos_username: "admin"
-chronos_passw: "secr3t"
+chronos_password: "secr3t"
 chronos_version: 'latest'
 chronos_hostname: "{{ ansible_default_ipv4.address }}"
 chronos_framework_name: "chronos"
