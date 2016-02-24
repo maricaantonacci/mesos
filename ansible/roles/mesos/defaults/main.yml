@@ -24,7 +24,7 @@ mesos_master_nodes: "
 {%- if mesos_masters_list is defined -%}
     {{mesos_masters_list}}
 {%- else -%}
-    {{groups.mesos_masters}}
+    {{groups['mesos_masters']}}
 {%- endif -%}"
 
 # The Mesos quorum value is based on the number of Mesos Masters. Take the
@@ -35,6 +35,6 @@ mesos_quorum: "
 {% if mesos_master_quorum is defined %}
 {{ mesos_master_quorum }}
 {% else %}
-{{ ( mesos_masters_nodes|count / 2) | round(0, 'ceil') | int }}
+{{ ( mesos_master_nodes|count / 2) | round(0, 'ceil') | int }}
 {%- endif -%}
 "

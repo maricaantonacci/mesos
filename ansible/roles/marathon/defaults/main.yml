@@ -9,19 +9,47 @@ marathon_server_zk_group: marathon_servers
 marathon_image: "indigodatacloud/marathon:{{ marathon_version }}"
 marathon_master_peers: "zk://{{ zookeeper_peers_nodes }}/mesos"
 marathon_zk_peers: "zk://{{ zookeeper_peers_nodes }}"
+
+openssl_self_signed:
+ - { name: "marathon.service.consul" }
+# - { name : "{{ ansible_hostname }}" }
+generate_random_pass: "true"
+marathon_key_password: "password"
+marathon_pkcs_password: "password"
+marathon_jks_password: "password"
+marathon_username: "admin"
+marathon_passw: "secr3t"
+marathon_https_port: '8443'
+marathon_keystore_path: '/etc/marathon/ssl_keystore.jks'
+
+marathon_ssl_ks_password: "
+   {%- if generate_random_pass|string() == 'true' -%}
+            {{ marathon_jks_randpassword.stdout  }}
+   {%- else -%}
+            {{ marathon_jks_password }}
+   {%- endif -%}
+"
+
 marathon_consul_version: 'latest'
 marathon_consul_image: "ciscocloud/marathon-consul:{{marathon_consul_version}}"
 
 marathon_consul_app_json: '{
   "id": "marathon-consul",
-  "args": ["--registry=http://consul.service.consul:8500 --marathon-location=marathon.service.consul:8080"],
+  "args": ["--registry=http://consul.service.consul:8500 --marathon-protocol=https --marathon-username={{marathon_username}} --marathon-password={{marathon_passw}} --marathon-location=marathon.service.consul:{{marathon_https_port}}"],
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "{{marathon_consul_image}}",
       "network": "BRIDGE",
       "portMappings": [{"containerPort": 4000, "hostPort": 0, "protocol": "tcp"}]
-    }
+    },
+    "volumes": [
+      {
+        "containerPath": "/usr/local/share/ca-certificates",
+        "hostPath": "/usr/local/share/ca-certificates/",
+        "mode": "RO"
+      },
+     ]
   },
   "instances": 1,
   "cpus": 0.1,
